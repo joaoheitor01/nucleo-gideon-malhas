@@ -259,8 +259,8 @@ const MalhasSystem = () => {
             </div>
         )}
       </div>
-      {/* RODAPÉ DO SISTEMA - Início */}
-      <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
+     {/* RODAPÉ DO SISTEMA - Início */}
+     <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
           
           <div className="mb-4">
             <p className="text-slate-400 text-sm">
@@ -270,7 +270,7 @@ const MalhasSystem = () => {
           </div>
 
           <div className="flex justify-center space-x-6">
-            {/* Link GitHub - Substitua pelo seu link real */}
+            {/* Link GitHub */}
             <a 
               href="https://github.com/joaoheitor01" 
               target="_blank" 
@@ -281,15 +281,15 @@ const MalhasSystem = () => {
               <span className="text-sm">GitHub</span>
             </a>
 
-            {/* Link LinkedIn - Substitua pelo seu link real */}
+            {/* Link Instagram */}
             <a 
-              href="https://linkedin.com/in/seu-usuario" 
+              href="https://www.instagram.com/joaoheitorbertoloto/" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center text-slate-500 hover:text-cyan-400 transition-colors duration-300"
+              className="flex items-center text-slate-500 hover:text-pink-500 transition-colors duration-300"
             >
-              <Linkedin size={20} className="mr-2" />
-              <span className="text-sm">LinkedIn</span>
+              <Instagram size={20} className="mr-2" />
+              <span className="text-sm">Instagram</span>
             </a>
           </div>
           
