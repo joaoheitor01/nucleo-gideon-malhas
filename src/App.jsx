@@ -100,7 +100,7 @@ const MalhasSystem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white">
+    <div className="w-full max-w-none mx-auto space-y-6 px-2 md:px-10 lg:px-20">
 <div className="max-w-7xl mx-auto space-y-6">        
         {/* Header - Gideon Style */}
         <header className="flex items-center justify-between border-b border-cyan-700/50 pb-4 mb-8">
@@ -144,9 +144,10 @@ const MalhasSystem = () => {
             <div className="flex flex-col items-center">
               <span className="text-cyan-500 font-mono mb-2 text-lg">[ R ] (Resistências)</span>
               <div 
-                className="grid gap-2 p-3 bg-slate-900/80 rounded border border-slate-700"
-                style={{ gridTemplateColumns: `repeat(${numMalhas}, minmax(60px, 1fr))` }}
-              >
+            className="grid gap-2 p-3 bg-slate-900/80 rounded border border-slate-700 w-full max-w-2xl mx-auto"
+            style={{ gridTemplateColumns: `repeat(${numMalhas}, minmax(0, 1fr))` }}
+          >
+              
                 {matrixR.map((row, i) => (
                   row.map((val, j) => (
                     <input
@@ -155,8 +156,8 @@ const MalhasSystem = () => {
                       placeholder={i===j ? `R${i+1}${i+1}` : `R${i+1}${j+1}`}
                       value={val}
                       onChange={(e) => handleMatrixChange(i, j, e.target.value)}
-                      className={`w-16 h-12 text-center bg-slate-800 rounded border ${i===j ? 'border-cyan-600 text-cyan-200 font-bold' : 'border-slate-600 text-slate-300'} focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-all placeholder:text-slate-600 text-sm`}
-                    />
+                      className={`w-full min-w-[3rem] h-12 text-center bg-slate-800 rounded border ${i===j ? 'border-cyan-600 text-cyan-200 font-bold' : 'border-slate-600 text-slate-300'} focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base`}
+/>
                   ))
                 ))}
               </div>
