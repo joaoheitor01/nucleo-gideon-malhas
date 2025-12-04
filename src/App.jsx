@@ -23,7 +23,6 @@ const MalhasSystem = () => {
   const handleMatrixChange = (row, col, value) => {
     const newMatrix = [...matrixR];
     newMatrix[row][col] = value;
-    // Mantém simetria para resistências
     if (row !== col && newMatrix[col][row] === '') {
        newMatrix[col][row] = value;
     }
@@ -44,7 +43,6 @@ const MalhasSystem = () => {
     let A = matrixR.map(row => row.map(val => parseFloat(val)));
     let b = vectorV.map(val => parseFloat(val));
 
-    // Validação
     for(let i=0; i<n; i++) {
         if(isNaN(b[i])) { setError("Preencha todas as tensões."); return; }
         for(let j=0; j<n; j++) {
@@ -52,7 +50,6 @@ const MalhasSystem = () => {
         }
     }
 
-    // Eliminação Gaussiana
     for (let i = 0; i < n; i++) {
       let maxEl = Math.abs(A[i][i]);
       let maxRow = i;
@@ -100,11 +97,10 @@ const MalhasSystem = () => {
   };
 
   return (
-    // CORREÇÃO: Restaurada a div principal com o fundo escuro e centralização
     <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-center">
       <div className="w-full max-w-7xl mx-auto space-y-6">        
         
-        {/* Header - Gideon Style */}
+        {/* Header */}
         <header className="flex items-center justify-between border-b border-cyan-700/50 pb-4 mb-8">
           <div className="flex items-center space-x-3">
             <div className="p-2 bg-cyan-950 rounded-full border border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)]">
@@ -136,13 +132,12 @@ const MalhasSystem = () => {
             </div>
         </div>
 
-        {/* Matrix Input Area */}
+        {/* Matrix Area */}
         <div className="bg-slate-800 p-6 rounded-xl border border-cyan-800 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
           
           <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-8 overflow-x-auto pb-4">
             
-            {/* Matrix R */}
             <div className="flex flex-col items-center w-full md:w-auto">
               <span className="text-cyan-500 font-mono mb-2 text-lg">[ R ] (Resistências)</span>
               <div 
@@ -151,7 +146,6 @@ const MalhasSystem = () => {
               >
                 {matrixR.map((row, i) => (
                   row.map((val, j) => (
-                    // CORREÇÃO: Adicionada a crase (`) no início do className e ajustado tamanho
                     <input
                       key={`${i}-${j}`}
                       type="number"
@@ -167,7 +161,6 @@ const MalhasSystem = () => {
 
             <div className="text-2xl text-slate-500 font-mono hidden md:block">×</div>
 
-            {/* Vector I (Labels only) */}
             <div className="flex flex-col items-center opacity-70 hidden md:flex">
               <span className="text-cyan-500 font-mono mb-2 text-lg">[ I ]</span>
               <div className="flex flex-col gap-2 p-3 bg-slate-900/50 rounded border border-slate-700/50">
@@ -181,7 +174,6 @@ const MalhasSystem = () => {
 
             <div className="text-2xl text-slate-500 font-mono hidden md:block">=</div>
 
-            {/* Vector V */}
             <div className="flex flex-col items-center">
               <span className="text-yellow-500 font-mono mb-2 text-lg">[ V ] (Tensões)</span>
               <div className="flex flex-col gap-2 p-3 bg-slate-900/80 rounded border border-slate-700">
@@ -199,7 +191,6 @@ const MalhasSystem = () => {
             </div>
           </div>
 
-          {/* Actions */}
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <button 
               onClick={solveSystem}
@@ -223,16 +214,13 @@ const MalhasSystem = () => {
             </button>
           </div>
 
-          {/* Error Message */}
           {error && (
             <div className="mt-6 p-4 bg-red-900/20 border border-red-500/50 text-red-200 rounded text-center animate-pulse">
               ⚠️ {error}
             </div>
           )}
-
         </div>
 
-        {/* Results Display */}
         {results && (
             <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-xl border border-cyan-500/30 shadow-2xl animation-fade-in-up">
               <h2 className="text-xl font-bold text-white mb-6 border-b border-slate-700 pb-2 flex items-center justify-between">
@@ -261,9 +249,8 @@ const MalhasSystem = () => {
             </div>
         )}
 
-        {/* RODAPÉ DO SISTEMA - Início */}
+        {/* RODAPÉ OFICIAL */}
         <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
-          
           <div className="mb-4">
             <p className="text-slate-400 text-sm">
               Arquitetado e Desenvolvido por <span className="text-cyan-400 font-bold tracking-wide">JOÃO HEITOR</span>
@@ -272,7 +259,6 @@ const MalhasSystem = () => {
           </div>
 
           <div className="flex justify-center space-x-6">
-            {/* Link GitHub */}
             <a 
               href="https://github.com/joaoheitor01" 
               target="_blank" 
@@ -283,7 +269,6 @@ const MalhasSystem = () => {
               <span className="text-sm">GitHub</span>
             </a>
 
-            {/* Link Instagram */}
             <a 
               href="https://www.instagram.com/joaoheitorbertoloto/" 
               target="_blank" 
@@ -299,7 +284,6 @@ const MalhasSystem = () => {
             GIDEON OS • SECURE CONNECTION • {new Date().getFullYear()}
           </div>
         </footer>
-        {/* RODAPÉ DO SISTEMA - Fim */}
 
       </div>
     </div>
