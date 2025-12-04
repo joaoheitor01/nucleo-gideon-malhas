@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Cpu, Calculator, RefreshCw } from 'lucide-react';
+import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram } from 'lucide-react';
 
 const MalhasSystem = () => {
   const [numMalhas, setNumMalhas] = useState(3);
@@ -259,7 +259,47 @@ const MalhasSystem = () => {
             </div>
         )}
       </div>
-    </div>
+      {/* RODAPÉ DO SISTEMA - Início */}
+      <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
+          
+          <div className="mb-4">
+            <p className="text-slate-400 text-sm">
+              Arquitetado e Desenvolvido por <span className="text-cyan-400 font-bold tracking-wide">JOÃO HEITOR</span>
+            </p>
+            <p className="text-xs text-slate-600 mt-1">Sistema de Análise de Malhas v1.0</p>
+          </div>
+
+          <div className="flex justify-center space-x-6">
+            {/* Link GitHub - Substitua pelo seu link real */}
+            <a 
+              href="https://github.com/joaoheitor01" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center text-slate-500 hover:text-white transition-colors duration-300"
+            >
+              <Github size={20} className="mr-2" />
+              <span className="text-sm">GitHub</span>
+            </a>
+
+            {/* Link LinkedIn - Substitua pelo seu link real */}
+            <a 
+              href="https://linkedin.com/in/seu-usuario" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center text-slate-500 hover:text-cyan-400 transition-colors duration-300"
+            >
+              <Linkedin size={20} className="mr-2" />
+              <span className="text-sm">LinkedIn</span>
+            </a>
+          </div>
+          
+          <div className="mt-8 text-[10px] text-slate-700 font-mono">
+            GIDEON OS • SECURE CONNECTION • {new Date().getFullYear()}
+          </div>
+        </footer>
+        {/* RODAPÉ DO SISTEMA - Fim */}
+        </div> {/* Fechamento da div max-w... */}
+    </div> {/* Fechamento da div min-h-screen... */}
   );
 };
 
