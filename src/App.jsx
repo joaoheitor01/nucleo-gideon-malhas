@@ -109,8 +109,8 @@ const MalhasSystem = () => {
               <Cpu className="w-8 h-8 text-cyan-400 animate-pulse" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON <span className="text-xs align-top text-cyan-500">CORE</span></h1>
-              <p className="text-xs text-cyan-400 uppercase tracking-widest">Calculadora de Malhas (Offline Mode)</p>
+              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON <span className="text-xs align-top text-cyan-500">Sistema</span></h1>
+              <p className="text-xs text-cyan-400 uppercase tracking-widest">Calculadora de Malhas (Offline)</p>
             </div>
           </div>
           <div className="flex items-center text-xs text-cyan-600 bg-slate-800/50 px-4 py-2 rounded-full border border-cyan-900/30">
