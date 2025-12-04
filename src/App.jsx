@@ -100,8 +100,10 @@ const MalhasSystem = () => {
   };
 
   return (
-    <div className="w-full max-w-none mx-auto space-y-6 px-2 md:px-10 lg:px-20">
-<div className="max-w-7xl mx-auto space-y-6">        
+    // CORREÇÃO: Restaurada a div principal com o fundo escuro e centralização
+    <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-center">
+      <div className="w-full max-w-7xl mx-auto space-y-6">        
+        
         {/* Header - Gideon Style */}
         <header className="flex items-center justify-between border-b border-cyan-700/50 pb-4 mb-8">
           <div className="flex items-center space-x-3">
@@ -109,7 +111,7 @@ const MalhasSystem = () => {
               <Cpu className="w-8 h-8 text-cyan-400 animate-pulse" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON <span className="text-xs align-top text-cyan-500">Sistema</span></h1>
+              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON <span className="text-xs align-top text-cyan-500">CORE</span></h1>
               <p className="text-xs text-cyan-400 uppercase tracking-widest">Calculadora de Malhas (Offline)</p>
             </div>
           </div>
@@ -141,15 +143,15 @@ const MalhasSystem = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-center gap-8 overflow-x-auto pb-4">
             
             {/* Matrix R */}
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center w-full md:w-auto">
               <span className="text-cyan-500 font-mono mb-2 text-lg">[ R ] (Resistências)</span>
               <div 
-            className="grid gap-2 p-3 bg-slate-900/80 rounded border border-slate-700 w-full max-w-2xl mx-auto"
-            style={{ gridTemplateColumns: `repeat(${numMalhas}, minmax(0, 1fr))` }}
-          >
-              
+                className="grid gap-2 p-3 bg-slate-900/80 rounded border border-slate-700 w-full md:w-auto"
+                style={{ gridTemplateColumns: `repeat(${numMalhas}, minmax(0, 1fr))` }}
+              >
                 {matrixR.map((row, i) => (
                   row.map((val, j) => (
+                    // CORREÇÃO: Adicionada a crase (`) no início do className e ajustado tamanho
                     <input
                       key={`${i}-${j}`}
                       type="number"
@@ -157,7 +159,7 @@ const MalhasSystem = () => {
                       value={val}
                       onChange={(e) => handleMatrixChange(i, j, e.target.value)}
                       className={`w-full min-w-[3rem] h-12 text-center bg-slate-800 rounded border ${i===j ? 'border-cyan-600 text-cyan-200 font-bold' : 'border-slate-600 text-slate-300'} focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base`}
-/>
+                    />
                   ))
                 ))}
               </div>
@@ -258,9 +260,9 @@ const MalhasSystem = () => {
               </div>
             </div>
         )}
-      </div>
-     {/* RODAPÉ DO SISTEMA - Início */}
-     <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
+
+        {/* RODAPÉ DO SISTEMA - Início */}
+        <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
           
           <div className="mb-4">
             <p className="text-slate-400 text-sm">
@@ -298,8 +300,9 @@ const MalhasSystem = () => {
           </div>
         </footer>
         {/* RODAPÉ DO SISTEMA - Fim */}
-        </div> {/* Fechamento da div max-w... */}
-    </div> {/* Fechamento da div min-h-screen... */}
+
+      </div>
+    </div>
   );
 };
 
