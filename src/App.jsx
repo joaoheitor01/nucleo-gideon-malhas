@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram } from 'lucide-react';
+import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram, History, Trash2 } from 'lucide-react';
 
 const MalhasSystem = () => {
   const [numMalhas, setNumMalhas] = useState(3);
@@ -8,24 +8,17 @@ const MalhasSystem = () => {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
 
-// Adicione 'History' e 'Trash2' nas importações do lucide-react
-import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram, History, Trash2 } from 'lucide-react';
-
-const MalhasSystem = () => {
-  // ... seus outros estados (numMalhas, matrixR, etc) ...
-
-  // NOVO: Estado do histórico com persistência (localStorage)
+  // Estado do histórico com persistência (localStorage)
   const [history, setHistory] = useState(() => {
     const saved = localStorage.getItem('gideon_history');
     return saved ? JSON.parse(saved) : [];
   });
 
-  // NOVO: Salvar no localStorage sempre que o histórico mudar
+  // Salvar no localStorage sempre que o histórico mudar
   useEffect(() => {
     localStorage.setItem('gideon_history', JSON.stringify(history));
   }, [history]);
 
-  // ... (mantenha o useEffect de inicialização das matrizes aqui) ...
   // Inicializa as matrizes
   useEffect(() => {
     if (matrixR.length !== numMalhas) {
@@ -68,6 +61,7 @@ const MalhasSystem = () => {
         }
     }
 
+    // Algoritmo de Eliminação de Gauss
     for (let i = 0; i < n; i++) {
       let maxEl = Math.abs(A[i][i]);
       let maxRow = i;
@@ -102,7 +96,7 @@ const MalhasSystem = () => {
       }
     }
 
- let x = new Array(n).fill(0);
+    let x = new Array(n).fill(0);
     for (let i = n - 1; i >= 0; i--) {
       let sum = 0;
       for (let j = i + 1; j < n; j++) {
@@ -112,23 +106,23 @@ const MalhasSystem = () => {
     }
 
     setResults(x);
-  };
-// --- CÓDIGO NOVO: ADICIONAR AO HISTÓRICO ---
-const newEntry = {
-  id: Date.now(), // ID único baseado no tempo
-  timestamp: new Date().toLocaleTimeString('pt-BR'),
-  malhas: n,
-  resistencias: matrixR.map(row => [...row]), // Cópia segura da matriz
-  tensoes: [...vectorV], // Cópia segura do vetor
-  correntes: x
-};
 
-setHistory(prev => {
-  const newHistory = [newEntry, ...prev]; // Adiciona no topo
-  return newHistory.slice(0, 5); // Mantém apenas os 5 últimos
-});
-// -------------------------------------------
-};
+    // Salvar no Histórico
+    const newEntry = {
+      id: Date.now(),
+      timestamp: new Date().toLocaleTimeString('pt-BR'),
+      malhas: n,
+      resistencias: matrixR.map(row => [...row]), // Cópia segura
+      tensoes: [...vectorV], // Cópia segura
+      correntes: x
+    };
+
+    setHistory(prev => {
+      const newHistory = [newEntry, ...prev];
+      return newHistory.slice(0, 5); // Mantém apenas os 5 últimos
+    });
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-center">
       <div className="w-full max-w-7xl mx-auto space-y-6">        
@@ -140,8 +134,8 @@ setHistory(prev => {
               <Cpu className="w-8 h-8 text-cyan-400 animate-pulse" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON </h1>
-              <p className="text-xs text-cyan-400 uppercase tracking-widest">Sistema de Calculo de Malhas</p>
+              <h1 className="text-2xl font-bold tracking-wider text-white">GIDEON <span className="text-xs align-top text-cyan-500">CORE</span></h1>
+              <p className="text-xs text-cyan-400 uppercase tracking-widest">Sistema de Calculo de Malhas (Offline)</p>
             </div>
           </div>
           <div className="flex items-center text-xs text-cyan-600 bg-slate-800/50 px-4 py-2 rounded-full border border-cyan-900/30">
@@ -281,8 +275,9 @@ setHistory(prev => {
               </div>
             </div>
         )}
-{/* --- SEÇÃO DE HISTÓRICO --- */}
-{history.length > 0 && (
+
+        {/* --- SEÇÃO DE HISTÓRICO --- */}
+        {history.length > 0 && (
           <div className="mt-8 pt-8 border-t border-slate-700">
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-bold text-slate-400 flex items-center">
@@ -318,7 +313,7 @@ setHistory(prev => {
                     ))}
                   </div>
 
-                  {/* Detalhes ao passar o mouse (Tooltip simples via title ou expandir se quiser) */}
+                  {/* Detalhes ao passar o mouse */}
                   <div className="mt-2 text-[10px] text-slate-500 truncate">
                     V: [{item.tensoes.join(', ')}] | R: {JSON.stringify(item.resistencias)}
                   </div>
@@ -327,6 +322,7 @@ setHistory(prev => {
             </div>
           </div>
         )}
+
         {/* RODAPÉ OFICIAL */}
         <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
           <div className="mb-4">
