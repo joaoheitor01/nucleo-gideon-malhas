@@ -8,6 +8,24 @@ const MalhasSystem = () => {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
 
+// Adicione 'History' e 'Trash2' nas importações do lucide-react
+import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram, History, Trash2 } from 'lucide-react';
+
+const MalhasSystem = () => {
+  // ... seus outros estados (numMalhas, matrixR, etc) ...
+
+  // NOVO: Estado do histórico com persistência (localStorage)
+  const [history, setHistory] = useState(() => {
+    const saved = localStorage.getItem('gideon_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // NOVO: Salvar no localStorage sempre que o histórico mudar
+  useEffect(() => {
+    localStorage.setItem('gideon_history', JSON.stringify(history));
+  }, [history]);
+
+  // ... (mantenha o useEffect de inicialização das matrizes aqui) ...
   // Inicializa as matrizes
   useEffect(() => {
     if (matrixR.length !== numMalhas) {
@@ -84,7 +102,7 @@ const MalhasSystem = () => {
       }
     }
 
-    let x = new Array(n).fill(0);
+ let x = new Array(n).fill(0);
     for (let i = n - 1; i >= 0; i--) {
       let sum = 0;
       for (let j = i + 1; j < n; j++) {
@@ -95,7 +113,22 @@ const MalhasSystem = () => {
 
     setResults(x);
   };
+// --- CÓDIGO NOVO: ADICIONAR AO HISTÓRICO ---
+const newEntry = {
+  id: Date.now(), // ID único baseado no tempo
+  timestamp: new Date().toLocaleTimeString('pt-BR'),
+  malhas: n,
+  resistencias: matrixR.map(row => [...row]), // Cópia segura da matriz
+  tensoes: [...vectorV], // Cópia segura do vetor
+  correntes: x
+};
 
+setHistory(prev => {
+  const newHistory = [newEntry, ...prev]; // Adiciona no topo
+  return newHistory.slice(0, 5); // Mantém apenas os 5 últimos
+});
+// -------------------------------------------
+};
   return (
     <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-center">
       <div className="w-full max-w-7xl mx-auto space-y-6">        
@@ -248,7 +281,52 @@ const MalhasSystem = () => {
               </div>
             </div>
         )}
+{/* --- SEÇÃO DE HISTÓRICO --- */}
+{history.length > 0 && (
+          <div className="mt-8 pt-8 border-t border-slate-700">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-bold text-slate-400 flex items-center">
+                <History className="mr-2 text-cyan-600" /> HISTÓRICO RECENTE (Últimos 5)
+              </h3>
+              <button 
+                onClick={() => setHistory([])}
+                className="text-xs text-red-400 hover:text-red-300 flex items-center bg-red-950/30 px-3 py-1 rounded border border-red-900/50"
+              >
+                <Trash2 size={12} className="mr-1" /> Limpar Histórico
+              </button>
+            </div>
 
+            <div className="space-y-4">
+              {history.map((item) => (
+                <div key={item.id} className="bg-slate-800/80 p-4 rounded-lg border border-slate-700 hover:border-cyan-500/50 transition-colors">
+                  <div className="flex justify-between items-center mb-3 pb-2 border-b border-slate-700/50">
+                    <span className="text-cyan-500 text-sm font-mono font-bold">
+                      {item.malhas} Malhas
+                    </span>
+                    <span className="text-slate-500 text-xs font-mono">
+                      {item.timestamp}
+                    </span>
+                  </div>
+                  
+                  {/* Resumo dos Resultados do Item */}
+                  <div className="grid grid-cols-3 gap-2 text-xs font-mono text-slate-300">
+                    {item.correntes.map((curr, idx) => (
+                      <div key={idx} className="bg-slate-900 px-2 py-1 rounded flex justify-between">
+                        <span className="text-slate-500">I<sub>{idx + 1}</sub></span>
+                        <span className="text-cyan-200">{curr.toFixed(3)}A</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Detalhes ao passar o mouse (Tooltip simples via title ou expandir se quiser) */}
+                  <div className="mt-2 text-[10px] text-slate-500 truncate">
+                    V: [{item.tensoes.join(', ')}] | R: {JSON.stringify(item.resistencias)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {/* RODAPÉ OFICIAL */}
         <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
           <div className="mb-4">
