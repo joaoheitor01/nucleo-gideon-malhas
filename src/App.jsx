@@ -329,7 +329,7 @@ const MalhasSystem = () => {
         <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
           <div className="mb-4">
             <p className="text-slate-400 text-sm">
-              Arquitetado e Desenvolvido por <span className="text-cyan-400 font-bold tracking-wide">JOÃO HEITOR MAURICIO MATIAS GUSTAVO SOARES </span>
+              Arquitetado e Desenvolvido por <span className="text-cyan-400 font-bold tracking-wide">JOÃO HEITOR, MAURICIO MATIAS, GUSTAVO SOARES</span>
             </p>
             <p className="text-xs text-slate-600 mt-1">Sistema de Análise de Malhas v1.0</p>
           </div>
