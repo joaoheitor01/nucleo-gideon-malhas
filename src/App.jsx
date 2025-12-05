@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Activity, Cpu, Calculator, RefreshCw, Github, Instagram, History, Trash2 } from 'lucide-react';
-
+//teste VS CODE
 const MalhasSystem = () => {
   const [numMalhas, setNumMalhas] = useState(3);
   const [matrixR, setMatrixR] = useState([]);
