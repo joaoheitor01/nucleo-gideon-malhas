@@ -125,8 +125,9 @@ const MalhasSystem = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-cyan-100 p-3 md:p-6 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-center">
-      <div className="w-full max-w-7xl mx-auto space-y-6">        
+    <div className="min-h-screen bg-slate-900 text-cyan-100 p-4 font-sans selection:bg-cyan-500 selection:text-white flex flex-col justify-start">
+      {/* Container principal expandido para largura total (w-full) com margem horizontal (px-6) */}
+      <div className="w-full px-6 py-4 space-y-6">        
         
         {/* Header */}
         <header className="flex flex-col md:flex-row items-center justify-between border-b border-cyan-700/50 pb-4 mb-4 md:mb-8 gap-4">
@@ -146,7 +147,7 @@ const MalhasSystem = () => {
         </header>
 
         {/* Controls */}
-        <div className="bg-slate-800/50 p-4 md:p-6 rounded-lg border border-cyan-900/50 shadow-lg backdrop-blur-sm">
+        <div className="bg-slate-800/50 p-4 md:p-6 rounded-lg border border-cyan-900/50 shadow-lg backdrop-blur-sm w-full">
             <label className="block text-sm text-cyan-400 mb-2 font-semibold">Número de Malhas (N)</label>
             <div className="flex items-center space-x-4">
               <input 
@@ -161,17 +162,18 @@ const MalhasSystem = () => {
             </div>
         </div>
 
-        {/* Matrix Area */}
-        <div className="bg-slate-800 p-4 md:p-6 rounded-xl border border-cyan-800 shadow-2xl relative overflow-hidden">
+        {/* Matrix Area - Expandida */}
+        <div className="bg-slate-800 p-4 md:p-6 rounded-xl border border-cyan-800 shadow-2xl relative overflow-hidden w-full">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent opacity-50"></div>
           
-          <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 overflow-x-auto pb-4">
+          {/* Layout responsivo com espaçamento maior */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 overflow-x-auto pb-4 w-full">
             
-            {/* Matrix R */}
-            <div className="flex flex-col items-center w-full md:w-auto">
+            {/* Matrix R - Agora ocupa o espaço disponível (flex-grow) */}
+            <div className="flex flex-col items-center flex-grow w-full md:w-auto">
               <span className="text-cyan-500 font-mono mb-2 text-base md:text-lg">[ R ] (Resistências)</span>
               <div 
-                className="grid gap-2 p-2 md:p-3 bg-slate-900/80 rounded border border-slate-700 w-fit md:w-auto"
+                className="grid gap-2 p-2 md:p-3 bg-slate-900/80 rounded border border-slate-700 w-full"
                 style={{ gridTemplateColumns: `repeat(${numMalhas}, minmax(0, 1fr))` }}
               >
                 {matrixR.map((row, i) => (
@@ -182,39 +184,37 @@ const MalhasSystem = () => {
                       placeholder={i===j ? `R${i+1}${i+1}` : `R${i+1}${j+1}`}
                       value={val}
                       onChange={(e) => handleMatrixChange(i, j, e.target.value)}
-                      className={`w-12 md:w-full min-w-[3rem] h-10 md:h-12 text-center bg-slate-800 rounded border ${i===j ? 'border-cyan-600 text-cyan-200 font-bold' : 'border-slate-600 text-slate-300'} focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-all placeholder:text-slate-600 text-sm md:text-base`}
+                      className={`w-full min-w-[3rem] h-10 md:h-14 text-center bg-slate-800 rounded border ${i===j ? 'border-cyan-600 text-cyan-200 font-bold' : 'border-slate-600 text-slate-300'} focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none transition-all placeholder:text-slate-600 text-sm md:text-lg`}
                     />
                   ))
                 ))}
               </div>
             </div>
 
-            {/* Operator X - Desktop */}
+            {/* Operator X */}
             <div className="text-2xl text-slate-500 font-mono hidden md:block">×</div>
-            {/* Arrow - Mobile */}
             <div className="block md:hidden text-slate-600 animate-bounce py-2"><ArrowDown size={24} /></div>
 
-            {/* Vector I - Hidden on Mobile */}
-            <div className="hidden md:flex flex-col items-center opacity-70">
+            {/* Vector I */}
+            <div className="hidden md:flex flex-col items-center opacity-70 shrink-0">
               <span className="text-cyan-500 font-mono mb-2 text-lg">[ I ]</span>
               <div className="flex flex-col gap-2 p-3 bg-slate-900/50 rounded border border-slate-700/50">
                 {Array(numMalhas).fill(0).map((_, i) => (
-                  <div key={i} className="w-12 h-12 flex items-center justify-center text-slate-400 font-mono text-sm italic border border-dashed border-slate-700 rounded">
+                  <div key={i} className="w-16 h-14 flex items-center justify-center text-slate-400 font-mono text-lg italic border border-dashed border-slate-700 rounded bg-slate-900/30">
                     i<sub>{i+1}</sub>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Operator = - Desktop */}
+            {/* Operator = */}
             <div className="text-2xl text-slate-500 font-mono hidden md:block">=</div>
-            {/* Arrow - Mobile */}
             <div className="block md:hidden text-slate-600 animate-bounce py-2"><ArrowDown size={24} /></div>
 
-            {/* Vector V */}
-            <div className="flex flex-col items-center">
+            {/* Vector V - Tamanho ajustado */}
+            <div className="flex flex-col items-center w-full md:w-auto md:min-w-[150px]">
               <span className="text-yellow-500 font-mono mb-2 text-base md:text-lg">[ V ] (Tensões)</span>
-              <div className="flex flex-col gap-2 p-2 md:p-3 bg-slate-900/80 rounded border border-slate-700">
+              <div className="flex flex-col gap-2 p-2 md:p-3 bg-slate-900/80 rounded border border-slate-700 w-full">
                 {vectorV.map((val, i) => (
                   <input
                     key={i}
@@ -222,7 +222,7 @@ const MalhasSystem = () => {
                     placeholder={`V${i+1}`}
                     value={val}
                     onChange={(e) => handleVectorChange(i, e.target.value)}
-                    className="w-12 md:w-16 h-10 md:h-12 text-center bg-slate-800 rounded border border-yellow-600/50 text-yellow-100 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-all placeholder:text-slate-600 text-sm"
+                    className="w-full h-10 md:h-14 text-center bg-slate-800 rounded border border-yellow-600/50 text-yellow-100 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 outline-none transition-all placeholder:text-slate-600 text-sm md:text-lg"
                   />
                 ))}
               </div>
@@ -232,9 +232,9 @@ const MalhasSystem = () => {
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
             <button 
               onClick={solveSystem}
-              className="flex items-center justify-center px-8 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-105 active:scale-95 w-full sm:w-auto"
+              className="flex items-center justify-center px-8 py-4 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded shadow-[0_0_20px_rgba(8,145,178,0.4)] transition-all hover:scale-105 active:scale-95 w-full sm:w-auto text-lg"
             >
-              <Calculator className="mr-2" size={20} />
+              <Calculator className="mr-2" size={24} />
               CALCULAR
             </button>
             <button 
@@ -245,9 +245,9 @@ const MalhasSystem = () => {
                 setResults(null);
                 setError('');
               }}
-              className="flex items-center justify-center px-4 py-3 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded transition-colors w-full sm:w-auto"
+              className="flex items-center justify-center px-6 py-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded transition-colors w-full sm:w-auto"
             >
-              <RefreshCw className="mr-2" size={18} />
+              <RefreshCw className="mr-2" size={20} />
               Limpar
             </button>
           </div>
@@ -260,23 +260,23 @@ const MalhasSystem = () => {
         </div>
 
         {results && (
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 md:p-8 rounded-xl border border-cyan-500/30 shadow-2xl animation-fade-in-up">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-6 md:p-8 rounded-xl border border-cyan-500/30 shadow-2xl animation-fade-in-up w-full">
               <h2 className="text-lg md:text-xl font-bold text-white mb-6 border-b border-slate-700 pb-2 flex items-center justify-between">
                 <span className="flex items-center"><Activity className="mr-2 text-green-400" /> RESULTADOS</span>
               </h2>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {results.map((current, index) => (
-                  <div key={index} className="bg-slate-950 p-4 rounded border-l-4 border-cyan-500 flex justify-between items-center group hover:bg-slate-900 transition-colors">
-                    <div className="font-mono text-slate-400 text-sm">
+                  <div key={index} className="bg-slate-950 p-6 rounded border-l-4 border-cyan-500 flex justify-between items-center group hover:bg-slate-900 transition-colors">
+                    <div className="font-mono text-slate-400 text-lg">
                       Corrente <span className="text-white font-bold">I<sub>{index + 1}</sub></span>
                     </div>
                     <div className="text-right">
-                      <div className="text-xl md:text-2xl font-mono font-bold text-cyan-300">
-                        {current.toFixed(4)} <span className="text-sm text-cyan-600">A</span>
+                      <div className="text-2xl md:text-3xl font-mono font-bold text-cyan-300">
+                        {current.toFixed(4)} <span className="text-base text-cyan-600">A</span>
                       </div>
                       {Math.abs(current) < 1 && Math.abs(current) > 0 && (
-                        <div className="text-xs text-slate-500">
+                        <div className="text-sm text-slate-500">
                           {(current * 1000).toFixed(2)} mA
                         </div>
                       )}
@@ -289,7 +289,7 @@ const MalhasSystem = () => {
 
         {/* --- SEÇÃO DE HISTÓRICO --- */}
         {history.length > 0 && (
-          <div className="mt-8 pt-8 border-t border-slate-700">
+          <div className="mt-8 pt-8 border-t border-slate-700 w-full">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
               <h3 className="text-lg font-bold text-slate-400 flex items-center">
                 <History className="mr-2 text-cyan-600" /> HISTÓRICO RECENTE (Últimos 5)
@@ -335,7 +335,7 @@ const MalhasSystem = () => {
         )}
 
         {/* RODAPÉ OFICIAL */}
-        <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10">
+        <footer className="mt-12 py-8 border-t border-cyan-900/30 text-center relative z-10 w-full">
           <div className="mb-4">
             <p className="text-slate-400 text-sm">
               Arquitetado e Desenvolvido por <span className="text-cyan-400 font-bold tracking-wide">JOÃO HEITOR, MAURICIO MATIAS, GUSTAVO SOARES</span>
